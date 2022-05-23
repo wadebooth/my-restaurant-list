@@ -1,31 +1,66 @@
 import { initializeApp } from "firebase/app";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
 import { Button, Form, Input } from "antd";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBMnXR384IkocEx68RLUFQXgc5SNKe0oFE",
-  authDomain: "my-first-firestore-wb.firebaseapp.com",
-  projectId: "my-first-firestore-wb",
-  storageBucket: "my-first-firestore-wb.appspot.com",
-  messagingSennpmderId: "9734175216",
-  appId: "1:9734175216:web:e7da8f8ccc8b9422a38535",
+  apiKey: "AIzaSyBfNVg55My3l48_vPXthxga11GWYSzng-k",
+  authDomain: "my-first-firestore-bc.firebaseapp.com",
+  projectId: "my-first-firestore-bc",
+  storageBucket: "my-first-firestore-bc.appspot.com",
+  messagingSenderId: "856295550753",
+  appId: "1:856295550753:web:f79df1de777968086dd860",
 };
 
-const app = initializeApp(firebaseConfig);
-
 export default function Login() {
+  const handleLogin = ({ email, password }) => {
+    const app = initializeApp(firebaseConfig); // conntect to firebase
+    const auth = getAuth(app); // connect to firebase/auth
+    // login with Firebase Auth
+    signInWithEmailAndPassword(auth, email, password)
+      .then((res) => console.log(res.user))
+      .catch(console.error);
+  };
+  const handleGoogleLogin = () => {
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider(app);
+    signInWithPopup(auth, provider)
+      .then((res) => console.log(res.user))
+      .catch(console.error);
+  };
   return (
     <section style={{ padding: "2em" }}>
-      <Form labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
-        <Form.Item label="Email" name="email">
+      <Form
+        onFinish={handleLogin}
+        labelCol={{ span: 8 }}
+        wrapperCol={{ span: 16 }}
+      >
+        <Form.Item
+          label="Email"
+          name="email"
+          rules={[{ required: true, message: "Please enter a valid email" }]}
+        >
           <Input />
         </Form.Item>
-        <Form.Item label="Password" name="password">
+        <Form.Item
+          label="Password"
+          name="password"
+          rules={[{ required: true, message: "Please enter your password" }]}
+        >
           <Input.Password />
         </Form.Item>
         <Form.Item wrapperCol={{ span: 16, offset: 8 }}>
           <Button type="primary" htmlType="submit">
             Login
           </Button>
+        </Form.Item>
+        <Form.Item wrapperCol={{ span: 16, offset: 8 }}>
+          <Button onClick={handleGoogleLogin}>Google Login</Button>
         </Form.Item>
       </Form>
     </section>
