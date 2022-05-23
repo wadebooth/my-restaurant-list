@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Menu } from "antd";
 import {
@@ -7,9 +7,11 @@ import {
   UserOutlined,
   HomeOutlined,
 } from "@ant-design/icons";
+import { UserContext } from "../App";
 
 export default function Menubar() {
   let navigate = useNavigate();
+  const { user } = useContext(UserContext);
   return (
     <Menu theme="dark" mode="horizontal">
       <Menu.Item
