@@ -6,18 +6,18 @@ const { Meta } = Card;
 export default function RestauarantCard({ restaurant }) {
   let navigate = useNavigate();
   return (
-    <Col style={{ width: "300px", margin: "1em" }} key={restaurant.id}>
+    <Col style={{ width: "300px", margin: "1em" }} key={restaurant?.id}>
       <Card
-        onClick={() => navigate(`/restaurants/${restaurant.id}`)}
+        onClick={() => navigate(`/restaurants/${restaurant?.id}`)}
         cover={
           <img
             alt={`Typical meal at ${restaurant.name}`}
-            src={restaurant.image}
+            src={restaurant?.image}
           />
         }
         hoverable
       >
-        <Meta title={restaurant.name} description={restaurant.address} />
+        <Meta title={restaurant?.name} description={restaurant?.address} />
       </Card>
     </Col>
   );

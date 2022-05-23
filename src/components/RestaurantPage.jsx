@@ -1,6 +1,21 @@
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
+import RestauarantCard from "./RestauarantCard";
 
 export default function RestaurantPage() {
   const { restaurantID } = useParams();
-  return <h1>This restaurant: {restaurantID}</h1>;
+  const [restaurant, setRestaurant] = useState();
+  useEffect(() => {
+    //fetch restaurant by id
+    fetch(`https://my-first-firestore-wb.web.app/restaurants/${restaurantID}`)
+      .then((response) => response.json())
+      .then((data) => setRestaurant(data))
+      .catch(console.error);
+  }, [restaurantID]);
+  return (
+    <>
+      <Link to="/"> &lt; Back</Link>
+      <RestauarantCard restaurant={restaurant} />;
+    </>
+  );
 }
