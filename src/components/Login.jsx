@@ -16,13 +16,13 @@ const firebaseConfig = {
   appId: "1:856295550753:web:f79df1de777968086dd860",
 };
 
-export default function Login() {
+export default function Login({ setUser }) {
   const handleLogin = ({ email, password }) => {
     const app = initializeApp(firebaseConfig); // conntect to firebase
     const auth = getAuth(app); // connect to firebase/auth
     // login with Firebase Auth
     signInWithEmailAndPassword(auth, email, password)
-      .then((res) => console.log(res.user))
+      .then((res) => setUser(res.user))
       .catch(console.error);
   };
   const handleGoogleLogin = () => {
@@ -30,7 +30,7 @@ export default function Login() {
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider(app);
     signInWithPopup(auth, provider)
-      .then((res) => console.log(res.user))
+      .then((res) => setUser(res.user))
       .catch(console.error);
   };
   return (
