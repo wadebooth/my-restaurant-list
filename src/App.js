@@ -1,37 +1,33 @@
+import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
+import { Layout } from "antd";
 import RestaurantList from "./components/RestaurantList";
-import { Layout, Menu } from "antd";
-import {
-  PlusCircleOutlined,
-  QuestionCircleOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import Menubar from "./components/MenuBar";
+import RestaurantPage from "./components/RestaurantPage";
 import "./App.css";
 
 const { Header, Content } = Layout;
 
 function App() {
   return (
-    <Layout className="layout">
-      <Header>
-        <Menu theme="dark" mode="horizontal">
-          <Menu.Item
-            key="add"
-            icon={<PlusCircleOutlined style={{ fontSize: "1.8em" }} />}
-          />
-          <Menu.Item
-            key="random"
-            icon={<QuestionCircleOutlined style={{ fontSize: "1.8em" }} />}
-          />
-          <Menu.Item
-            key="user"
-            icon={<UserOutlined style={{ fontSize: "1.8em" }} />}
-          />
-        </Menu>
-      </Header>
-      <Content>
-        <RestaurantList />
-      </Content>
-    </Layout>
+    <BrowserRouter>
+      <Layout className="layout">
+        <Header>
+          <Menubar />
+        </Header>
+        <Content>
+          <Routes>
+            <Route
+              path="/restaurants/:restaurantId"
+              element={<RestaurantPage />}
+            />
+            <Route path="/random" element={<h1>Random</h1>} />
+            <Route path="/add" element={<h1>Add</h1>} />
+            <Route path="/" element={<RestaurantList />} />
+            <Route path="Login" element={<h1>Login</h1>} />
+          </Routes>
+        </Content>
+      </Layout>
+    </BrowserRouter>
   );
 }
 
